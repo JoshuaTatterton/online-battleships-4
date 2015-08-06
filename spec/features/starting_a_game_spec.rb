@@ -41,7 +41,7 @@ feature 'playing a new game' do
       board = game.opponent_board_view game.player_1
       visit '/new_game'
       click_button 'Submit'
-      click_link 'Enter Player 1 Board'
+      click_link 'Enter Game Arena'
       placeships
       placeships
       expect(page).to have_content board
@@ -51,7 +51,7 @@ feature 'playing a new game' do
       visit '/new_game'
       fill_in "name", with: 'Dave'
       click_button 'Submit'
-      click_link 'Enter Player 1 Board'
+      click_link 'Enter Game Arena'
       placeships
       placeships
       expect(page).to have_content 'Please enter board coordinate to shoot at:'
@@ -86,6 +86,29 @@ feature 'playing a new game' do
       p1fire "d1"
       expect(page).to have_content 'sunk'
     end
+    scenario 'should win the game' do
+      startgame
+      placeships
+      placeships
+      p1fire "a1"
+      p2fire "b1"
+      p1fire "b1"
+      p2fire "c1"
+      p1fire "c1"
+      p2fire "d1"
+      p1fire "d1"
+      p2fire "E4"
+      p1fire "e5"
+      p2fire "e5"
+      p1fire "e6"
+      p2fire "e6"
+      p1fire "e7"
+      p2fire "j1"
+      p1fire "e4"
+      p2fire "i8"
+      p1fire "e8"
+      expect(page).to have_content 'Player 1 Wins!'
+    end
   end
 
   feature 'player 2 playing a game' do
@@ -102,7 +125,7 @@ feature 'playing a new game' do
       board = game.opponent_board_view game.player_2
       visit '/new_game'
       click_button 'Submit'
-      click_link 'Enter Player 1 Board'
+      click_link 'Enter Game Arena'
       placeships
       placeships
       expect(page).to have_content board
@@ -149,6 +172,31 @@ feature 'playing a new game' do
       p2fire "a1"
       expect(page).to have_content 'sunk'
     end
+
+    scenario 'should win the game' do
+      startgame
+      placeships
+      placeships
+      p1fire "a1"
+      p2fire "b1"
+      p1fire "b1"
+      p2fire "c1"
+      p1fire "c1"
+      p2fire "d1"
+      p1fire "d1"
+      p2fire "a1"
+      p1fire "e5"
+      p2fire "e5"
+      p1fire "e6"
+      p2fire "e6"
+      p1fire "e7"
+      p2fire "e7"
+      p1fire "j1"
+      p2fire "e8"
+      p1fire "i9"
+      p2fire "E4"
+      expect(page).to have_content 'Player 2 Wins!'
+    end
   end
 end
 
@@ -156,7 +204,7 @@ def startgame
   visit '/'
   click_link 'New Game'
   click_button 'Submit'
-  click_link 'Enter Player 1 Board'
+  click_link 'Enter Game Arena'
 end
 
 def placeships

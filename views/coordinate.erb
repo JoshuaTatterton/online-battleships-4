@@ -1,5 +1,9 @@
 <div>
   <pre>
+    <% if session[:game].has_winner? %>
+      Player 2 Wins! <br>
+      <a href="/">Start Over</a>
+    <%else%>
     <h2> Welcome to the Game! </h2>
 <%= session[:game].opponent_board_view session[:game].player_1 %>
   </pre>
@@ -10,5 +14,5 @@
     </form>
     
     <h3><%= @hit %></h3>
-  
+    <%end%>
 </div>
